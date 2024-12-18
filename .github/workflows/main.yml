@@ -1,0 +1,31 @@
+name: Run BLS data collector
+
+on: [workflow_dispatch]
+
+env: 
+  api_key: ${{ secrets.BLS_API_KEY }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          pyhton-version: '3.9'
+          
+      - name: Install Python Packages
+        run: |
+          python -m pip instal --upgrade pip
+          pip install -r requirements.txt
+          
+      - name: Execute Script
+        run: python collectdata.py 
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Update courses. md
+        id: auto-commit-action
+          
