@@ -10,8 +10,8 @@ Original file is located at
 # i think this pip things helps to 1) create a requirments file
 #2) the requirments.tx file will save crrent the versions of the exact packages
 #im using here so that I dont have to specify each time, or somethin
-!pip install session-info
-!pip freeze > requirments.txt
+#!pip install session-info <-comminting out these in repository file because done need them here in order to run code(they were just to help get requirments.txt file) if running code in colab outside of this you wll have to uncomments thses again
+#!pip freeze > requirments.txt <-same
 
 import requests
 import json
