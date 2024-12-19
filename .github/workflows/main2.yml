@@ -26,7 +26,15 @@ jobs:
           
       - name: Execute Script
         run: python monthlydatacollectionupdate.py 
-      
+
+
+      - name: commit files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -A
+          git diff-index --quiet HEAD || (git commit -a -m "updated files" --allow-empty)
+          
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
@@ -34,4 +42,13 @@ jobs:
           branch: ${{ github.ref }}
           directory: .
           force: true
+          
+      - name: Add and commit for csv
+        uses: EndBug/add-and-commit@v9
+        with:
+          author_name: GitHub Actions
+          author_email: 41898282+github-actions[bot]@users.noreply.github.com
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          message: "chore: Update file"
+          add: "*.csv"
           
