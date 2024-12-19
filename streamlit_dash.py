@@ -7,8 +7,7 @@ Original file is located at
     https://colab.research.google.com/drive/1ep2uxi1ssZ3K8S9eGlMSBpZARAowJR1X
 """
 
-#######################
-# Import libraries
+
 import streamlit as st
 import pandas as pd
 import altair as alt
@@ -78,7 +77,7 @@ st.markdown("""
 
 df_reshaped = pd.read_csv('BLSdata.csv')
 
-st.set_page_config(page_title="BLS Data Dashboard", page_icon=":bar_chart:", layout="wide")
+st.set_page_config(page_title="BLS Data Dashboard", page_icon=":bar_chart:", layout="wide")  
 st.title("BLS Data Dashboard")
 
 
@@ -91,15 +90,13 @@ selected_seriesID = st.sidebar.selectbox("Select Series ID", data['seriesID'].un
 filtered_data = data[(data['year'] == selected_year) & (data['period'] == selected_period) & (data['seriesID'] == selected_seriesID)]
 
 
-col1, col2 = st.columns(2)
+col1, col2 = st.columns(2)  
 
 
 with col1:
     st.subheader("Line Chart")
-    fig, ax = plt.subplots()  
-    sns.lineplot(data=filtered_data, x='year', y='value', ax=ax)  
-    ax.set_title("Value Over Time")
-    st.pyplot(fig)  
+    fig = px.line(filtered_data, x='year', y='value', title="Value Over Time")
+    st.plotly_chart(fig, use_container_width=True)  
 
 
 with col2:
@@ -108,7 +105,5 @@ with col2:
 
 
 st.subheader("Interactive Chart")
-fig2, ax2 = plt.subplots()
-sns.scatterplot(data=data, x='year', y='value', hue='seriesID', ax=ax2)
-ax2.set_title("Value by Series ID")
-st.pyplot(fig2)
+fig2 = px.scatter(data, x='year', y='value', color='seriesID', hover_data=['period'])
+st.plotly_chart(fig2, use_container_width=True)
