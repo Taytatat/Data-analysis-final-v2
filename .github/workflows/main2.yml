@@ -1,6 +1,8 @@
-name: Run BLS data collector
+name: Update BLS Data
 
-on: [workflow_dispatch]
+on: 
+  schedule:
+   - cron: '0 0 8 * *'
 
 env: 
   api_key: ${{ secrets.BLS_API_KEY }}
@@ -23,7 +25,7 @@ jobs:
           pip install -r requirements.txt
           
       - name: Execute Script
-        run: python collectdata.py 
+        run: python monthlydatacollectionupdate.py 
       
       - name: Push changes
         uses: ad-m/github-push-action@master
