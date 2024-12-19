@@ -14,7 +14,7 @@ import os #this lets me use te secrets
 
 #####code from her until the break is the same as the code in teh original data collection python file. Need it because we need the function again for get_bls_data##############
 
-#api_key = os.environ["api_key"]  #grabs env variable from yml file, to utilize the secret in the code
+api_key = os.environ["api_key"]  #grabs env variable from yml file, to utilize the secret in the code
 #checked and local api_key worked so if yml is configured correctly then api should run here
 
 #trying to create a function that can retreave the requested data from the BLS database using their API key
