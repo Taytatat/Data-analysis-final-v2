@@ -13,6 +13,8 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 import plotly.express as px
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 
 st.set_page_config(
@@ -73,6 +75,40 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-#######################
-# Load data
+
 df_reshaped = pd.read_csv('BLSdata.csv')
+
+st.set_page_config(page_title="BLS Data Dashboard", page_icon=":bar_chart:", layout="wide")
+st.title("BLS Data Dashboard")
+
+-
+st.sidebar.title("Filters")
+selected_year = st.sidebar.selectbox("Select Year", data['year'].unique())
+selected_period = st.sidebar.selectbox("Select Period", data['period'].unique())
+selected_seriesID = st.sidebar.selectbox("Select Series ID", data['seriesID'].unique())
+
+
+filtered_data = data[(data['year'] == selected_year) & (data['period'] == selected_period) & (data['seriesID'] == selected_seriesID)]
+
+
+col1, col2 = st.columns(2)
+
+
+with col1:
+    st.subheader("Line Chart")
+    fig, ax = plt.subplots()  
+    sns.lineplot(data=filtered_data, x='year', y='value', ax=ax)  
+    ax.set_title("Value Over Time")
+    st.pyplot(fig)  
+
+
+with col2:
+    st.subheader("Data Table")
+    st.dataframe(filtered_data, use_container_width=True)
+
+
+st.subheader("Interactive Chart")
+fig2, ax2 = plt.subplots()
+sns.scatterplot(data=data, x='year', y='value', hue='seriesID', ax=ax2)
+ax2.set_title("Value by Series ID")
+st.pyplot(fig2)
