@@ -81,7 +81,7 @@ df_reshaped = pd.read_csv('BLSdata.csv')
 st.set_page_config(page_title="BLS Data Dashboard", page_icon=":bar_chart:", layout="wide")
 st.title("BLS Data Dashboard")
 
--
+
 st.sidebar.title("Filters")
 selected_year = st.sidebar.selectbox("Select Year", data['year'].unique())
 selected_period = st.sidebar.selectbox("Select Period", data['period'].unique())
